@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Rect from "./Rect";
 import "./App.css";
 
 class App extends Component {
@@ -10,12 +9,23 @@ class App extends Component {
     padding: "5px",
     borderBottom: "2px solid #900",
   };
+  btnStyle = {
+    fontSize: "20pt",
+    padding: "0px 10px",
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      msg: "Hello Component.",
+      msg: "Hello",
     };
+
+    // setStateを使い１秒ごとに!が追加される処理
+    setInterval(() => {
+      this.setState((state) => ({
+        msg: state.msg + "!",
+      }));
+    }, 1000);
   }
 
   render() {
