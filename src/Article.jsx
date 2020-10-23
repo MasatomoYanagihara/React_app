@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import LikeButton from "./LikeButton";
 
 const Article = (props) => {
   // const [state変数名, state変更関数名] = useState(state初期値);
@@ -14,6 +15,7 @@ const Article = (props) => {
       checked={isPublished} 
       onClick={() => togglePublished(!isPublished)}
       />
+      <LikeButton />
     </div>
   )
 }
