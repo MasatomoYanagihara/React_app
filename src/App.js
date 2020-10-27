@@ -1,48 +1,79 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./App.css";
 
-// コンテキストの作成
-const Context = React.createContext({
-  title: "Title",
-  message: "this is sample message.",
-});
+// ステートのマッピング
+function mappingState(state) {
+  return state;
+}
 
+// Appコンポーネント
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
-        <h1>Context</h1>
-        <Title />
+        <h1>Redux</h1>
         <Message />
+        <Button />
       </div>
     );
   }
 }
+// ストアのコネクト
+App = connect()(App);
 
-class Title extends Component {
-  // クラス内でコンテキストを使用する時に記述
-  static contextType = Context;
-
-  render() {
-    return (
-      <div>
-        <h2>{this.context.title}</h2>
-      </div>
-    );
-  }
-}
-
+// メッセージ表示のコンポーネント
 class Message extends Component {
-  // クラス内でコンテキストを使用する時に記述
-  static contextType = Context;
+  style = {
+    fontSize: "20pt",
+    padding: "20px 5px",
+  };
 
   render() {
     return (
-      <div>
-        <p>{this.context.message}</p>
-      </div>
+      <p style={this.style}>
+        {this.props.message}: {this.props.counter}
+      </p>
     );
   }
 }
+// ストアのコネクト
+Message = connect(mappingState)(Message);
+
+//
+class Button extends Component {
+  style = {
+    fontSize: "16pt",
+    padding: "5px 10px",
+  };
+
+  constructor(props) {
+    super(props);
+    this.doAction = this.doAction.bind(this);
+  }
+
+  // ボタンクリックでディスパッチを実行
+  doAction(e) {
+    if (e.shiftKey) {
+      this.props.dispatch({ type: "DECREMENT" });
+    } else {
+      this.props.dispatch({ type: "INCREMENT" });
+    }
+  }
+
+  render() {
+    return (
+      <button style={this.style} onClick={this.doAction}>
+        click
+      </button>
+    );
+  }
+}
+// ストアのコネクト
+Button = connect()(Button);
 
 export default App;
